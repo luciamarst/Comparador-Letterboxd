@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - Recomendador Letterboxd</title>
+    <link rel="stylesheet" href="\static\style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Resultados de Compatibilidad</h1>
+        </header>
+
+        <div class="results">
+            <div class="compatibility-score">
+                <h2>Compatibilidad Final</h2>
+                <div class="score" id="score-number">0%</div>
+                <div class="score-bar">
+                    <div class="score-fill" id="score-fill" data-width="{{ "%.2f"|format(resultados.compatibilidad_final) }}"></div>
+                </div>
+            </div>
+
+            <div class="metrics">
+                <div class="metric">
+                    <h3>Similitud en Ratings</h3>
+                    <span class="metric-value" data-value="{{ "%.2f"|format(resultados.similitud_coseno) }}">0%</span>
+                </div>
+                
+                <div class="metric">
+                    <h3>Similitud en Watchlists</h3>
+                    <span class="metric-value" data-value="{{ "%.2f"|format(resultados.similitud_jaccard) }}">0%</span>
+                </div>
+                
+                <div class="metric">
+                    <h3>Películas en Común</h3>
+                    <span class="metric-value" data-value="{{ resultados.peliculas_comunes }}">0</span>
+                </div>
+            </div>
+
+            <div class="genres">
+                <div class="genre-info">
+                    <h3>Género Más Compatible</h3>
+                    <p>{{ resultados.genero_mas_influyente }}</p>
+                </div>
+                
+                <div class="genre-info">
+                    <h3>Género Menos Compatible</h3>
+                    <p>{{ resultados.genero_menos_influyente }}</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="/" class="back-btn">Nuevo Análisis</a>
+    </div>
+
+    <script>
+        // Animación de la barra de progreso y contadores
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animar barra de progreso principal
+            const scoreFill = document.getElementById('score-fill');
+            const targetWidth = parseFloat(scoreFill.dataset.width);
+            
+            setTimeout(() => {
+                scoreFill.style.width = targetWidth + '%';
+            }, 500);
+
+            // Animar contador principal
+            const scoreNumber = document.getElementById('score-number');
+            animateCounter(scoreNumber, 0, targetWidth, 2000, '%');
+
+            // Animar métricas
+            const metricValues = document.querySelectorAll('.metric-value');
+            metricValues.forEach((metric, index) => {
+                const targetValue = parseFloat(metric.dataset.value);
+                const isPercentage = metric.dataset.value.includes('.');
+                
+                setTimeout(() => {
+                    animateCounter(metric, 0, targetValue, 1500, isPercentage ? '%' : '');
+                }, 1000 + (index * 200));
+            });
+        });
+
+        function animateCounter(element, start, end, duration, suffix = '') {
+            const startTime = performance.now();
+            
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function (ease-out)
+                const easedProgress = 1 - Math.pow(1 - progress, 3);
+                
+                const current = start + (end - start) * easedProgress;
+                
+                if (suffix === '%') {
+                    element.textContent = current.toFixed(2) + suffix;
+                } else {
+                    element.textContent = Math.round(current) + suffix;
+                }
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                }
+            }
+            
+            requestAnimationFrame(updateCounter);
+        }
+
+        // Añadir efectos de hover y entrada escalonada
+        const metrics = document.querySelectorAll('.metric');
+        metrics.forEach((metric, index) => {
+            metric.style.opacity = '0';
+            metric.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                metric.style.transition = 'all 0.6s ease';
+                metric.style.opacity = '1';
+                metric.style.transform = 'translateY(0)';
+            }, 1500 + (index * 150));
+        });
+    </script>
+</body>
+</html>

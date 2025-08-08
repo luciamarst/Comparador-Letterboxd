@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendador Letterboxd</title>
+    <link rel="stylesheet" href="\static\style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Compatibilidad Cinematográfica</h1>
+            <p>Descubre qué tan compatible eres con otra persona basándose en sus cuentas de Letterboxd</p>
+        </header>
+
+        <form action="/analizar" method="post" enctype="multipart/form-data" class="upload-form">
+            <div class="personas-container">
+                <div class="persona">
+                    <h2>Persona 1</h2>
+                    <div class="file-group">
+                        <label for="watchlist1">Watchlist CSV:</label>
+                        <input type="file" id="watchlist1" name="watchlist1" accept=".csv" required>
+                    </div>
+                    <div class="file-group">
+                        <label for="ratings1">Ratings CSV:</label>
+                        <input type="file" id="ratings1" name="ratings1" accept=".csv" required>
+                    </div>
+                    <div class="file-group">
+                        <label for="watched1">Watched CSV:</label>
+                        <input type="file" id="watched1" name="watched1" accept=".csv" required>
+                    </div>
+                </div>
+
+                <div class="persona">
+                    <h2>Persona 2</h2>
+                    <div class="file-group">
+                        <label for="watchlist2">Watchlist CSV:</label>
+                        <input type="file" id="watchlist2" name="watchlist2" accept=".csv" required>
+                    </div>
+                    <div class="file-group">
+                        <label for="ratings2">Ratings CSV:</label>
+                        <input type="file" id="ratings2" name="ratings2" accept=".csv" required>
+                    </div>
+                    <div class="file-group">
+                        <label for="watched2">Watched CSV:</label>
+                        <input type="file" id="watched2" name="watched2" accept=".csv" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="analyze-btn">Analizar Compatibilidad</button>
+        </form>
+
+        <div class="info">
+            <h3>¿Cómo obtener tus archivos CSV?</h3>
+            <p>1. Ve a <a href="https://letterboxd.com/settings/data" target="_blank">letterboxd.com/settings/data</a></p>
+            <p>2. Solicita la exportación de datos</p>
+            <p>3. Descarga los archivos CSV necesarios</p>
+        </div>
+    </div>
+</body>
+</html>
