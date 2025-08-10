@@ -188,8 +188,9 @@ def analizar():
             file = request.files[archivo]
             if not file.filename:
                 return f"<h1>Archivo vacío: {archivo}</h1><a href='/'>Volver</a>"
-            
-            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.csv')
+          
+            # CAMBIO PARA VERCEL: usar /tmp/
+            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.csv', dir='/tmp')
             file.save(temp_file.name)
             archivos_guardados[archivo] = temp_file.name
         
