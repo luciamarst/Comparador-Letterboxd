@@ -1,1 +1,1 @@
-### Comparador de compatibilidad basado en perfiles de Letterboxd
+# Comparador de compatibilidad basado en perfiles de Letterboxd
