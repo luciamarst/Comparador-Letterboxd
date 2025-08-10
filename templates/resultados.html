@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="\static\style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container-results">
         <header>
-            <h1>🎬 Resultados de Compatibilidad</h1>
+            <div class ="logo">
+               <h1> Resultados de <br> Compatibilidad</h1>
+            </div>
+            
         </header>
 
         <div class="results">
@@ -23,7 +26,7 @@
 
             <div class="metrics">
                 <div class="metric">
-                    <h3>Similitud en Ratings</h3>
+                    <h3>Similitud en Ratings de películas comúnes</h3>
                     <span class="metric-value" data-value="{{ "%.2f"|format(resultados.similitud_coseno) }}">0%</span>
                 </div>
                 
@@ -51,7 +54,11 @@
             </div>
         </div>
 
-        <a href="/" class="back-btn">Nuevo Análisis</a>
+        <a href="/" class="analyze-btn">
+            <div class="analyze-btn-left"></div>
+            <div class="analyze-btn-center"><span> Nuevo Análisis</span></div>
+            <div class="analyze-btn-right"></div>
+        </a>
     </div>
 
     <script>
@@ -89,16 +96,18 @@
                 const progress = Math.min(elapsed / duration, 1);
                 
                 // Easing function (ease-out)
-                const easedProgress = 1 - Math.pow(1 - progress, 3);
+                const easedProgress = 1 - Math.pow(1 - progress, 3); // Animacion suave
                 
-                const current = start + (end - start) * easedProgress;
+                const current = start + (end - start) * easedProgress; // Calcular el valor actual
                 
+                // Actualizar el contenido del elemento
                 if (suffix === '%') {
                     element.textContent = current.toFixed(2) + suffix;
                 } else {
                     element.textContent = Math.round(current) + suffix;
                 }
                 
+                // Si la animación no ha terminado, seguir actualizando
                 if (progress < 1) {
                     requestAnimationFrame(updateCounter);
                 }
@@ -107,7 +116,7 @@
             requestAnimationFrame(updateCounter);
         }
 
-        // Añadir efectos de hover y entrada escalonada
+        // Animación de métricas
         const metrics = document.querySelectorAll('.metric');
         metrics.forEach((metric, index) => {
             metric.style.opacity = '0';

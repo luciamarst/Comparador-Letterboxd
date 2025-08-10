@@ -6,14 +6,48 @@
     <title>Recomendador Letterboxd</title>
     <link rel="stylesheet" href="\static\style.css">
 </head>
+
+
+
 <body>
+    <!-- Fondo con grid de imágenes -->
+    <div class="background-grid">
+        <div class="bg-banner"></div>
+        <div class="bg-left"></div>
+        <div class="bg-center"></div>
+        <div class="bg-right"></div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner-container">
+                <div class="spinner"></div>
+                <div class="spinner-images">
+                    <div class="spinner-image active" id="image1"></div>
+                    <div class="spinner-image" id="image2"></div>
+                    <div class="spinner-image" id="image3"></div>
+                </div>
+            </div>
+            <h3>Analizando compatibilidad...</h3>
+            <p>Por favor, espera mientras procesamos tus datos</p>
+            <div class="loading-steps">
+                <div class="step active" id="step1">📁 Cargando archivos...</div>
+                <div class="step" id="step2">🎬 Analizando películas...</div>
+                <div class="step" id="step3">🎭 Procesando géneros...</div>
+                <div class="step" id="step4">📊 Calculando compatibilidad...</div>
+            </div>
+            <p>Esto puede tardar unos minutos debido a la cantidad de datos a procesar.</p>
+        </div>
+    </div>
+
     <div class="container">
         <header>
-            <h1>🎬 Compatibilidad Cinematográfica</h1>
-            <p>Descubre qué tan compatible eres con otra persona basándose en sus cuentas de Letterboxd</p>
+            <h1>Compatibilidad <br> Cinematografica</h1>
+            <p>Descubre qué tan compatible eres con otra persona basándose en vuestras cuentas de Letterboxd</p>
         </header>
 
-        <form action="/analizar" method="post" enctype="multipart/form-data" class="upload-form">
+        <form action="/analizar" method="post" enctype="multipart/form-data" class="upload-form" id="analyzForm">
             <div class="personas-container">
                 <div class="persona">
                     <h2>Persona 1</h2>
@@ -48,7 +82,13 @@
                 </div>
             </div>
 
-            <button type="submit" class="analyze-btn">Analizar Compatibilidad</button>
+            <!-- BOTÓN CON ID PARA EL JAVASCRIPT -->
+            <button type="submit" class="analyze-btn" id="submitBtn">
+                <div class="analyze-btn-left"></div>
+                <div class="analyze-btn-center"><span> Analizar Compatiblidad</span></div>
+                <div class="analyze-btn-right"></div>
+                <span id="btnLoading" style="display: none;">⏳ Analizando...</span>
+            </button>
         </form>
 
         <div class="info">
@@ -57,6 +97,79 @@
             <p>2. Solicita la exportación de datos</p>
             <p>3. Descarga los archivos CSV necesarios</p>
         </div>
+
+        <div class="info">
+            <h3>¿Por qué son necesarios los archivos.csv de ambas personas?</h3>
+            <p>Los archivos CSV de ambas personas son necesarios para poder comparar sus listas de películas vistas, calificaciones y watchlists. Debido a que letterboxd no permite acceder a esta información de forma directa a través de su API, es necesario utilizar los archivos exportados por los usuarios.</p>
+            <div class="aviso">De lo contrario podría violar los términos y condiciones de Letterboxd.</div>
+        </div>
+
     </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('analyzForm').addEventListener('submit', function(e) {
+                // Mostrar loading
+                document.getElementById('loadingOverlay').style.display = 'flex';
+                
+                // Cambiar botón
+                const btnLoading = document.getElementById('btnLoading');
+                const submitBtn = document.getElementById('submitBtn');
+                
+                if (btnLoading) btnLoading.style.display = 'inline';
+                if (submitBtn) submitBtn.disabled = true;
+                
+                // Iniciar animación de imágenes
+                startImageCycle();
+                
+                // Simular progreso de pasos
+                setTimeout(() => {
+                    updateStep('step1', 'step2');
+                }, 2000);
+                
+                setTimeout(() => {
+                    updateStep('step2', 'step3');
+                }, 4000);
+                
+                setTimeout(() => {
+                    updateStep('step3', 'step4');
+                }, 6000);
+            });
+            
+            function updateStep(currentId, nextId) {
+                const current = document.getElementById(currentId);
+                const next = document.getElementById(nextId);
+                
+                if (current) {
+                    current.classList.add('completed');
+                    current.classList.remove('active');
+                }
+                if (next) {
+                    next.classList.add('active');
+                }
+            }
+            
+            function startImageCycle() {
+                const images = document.querySelectorAll('.spinner-image');
+                let currentIndex = 0;
+                
+                // Función para cambiar imágenes manualmente (alternativa a CSS)
+                function cycleImages() {
+                    images.forEach((img, index) => {
+                        img.classList.remove('active');
+                        if (index === currentIndex) {
+                            img.classList.add('active');
+                        }
+                    });
+                    
+                    currentIndex = (currentIndex + 1) % images.length;
+                }
+                
+                // Cambiar imagen cada 2 segundos
+                setInterval(cycleImages, 2000);
+            }
+        });
+        </script>
 </body>
 </html>

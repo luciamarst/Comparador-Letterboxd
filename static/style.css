@@ -1,20 +1,124 @@
+/*Fuentes añadidas por mi*/
+@font-face {
+  font-family: 'Cinema Groovy';
+  src: url('fuentes/Cinema Groovy.otf') format('woff2'),
+       url('fuentes/Cinema Groovy.otf') format('woff'),
+       url('fuentes/Cinema Groovy.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'AnonymousRegular';
+    font-style: normal;
+    font-weight: normal;
+    src: url('fuentes/Anonymous.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'JetBrainsMono-Bold';
+    src: url('fuentes/JetBrainsMono-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/*==================================================================================================================*/
+/*Estilo agregados para fragmentos ya definidos por html*/
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #1a1a1a; /* Color de respaldo */
     min-height: 100vh;
     color: #333;
+    position: relative;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+/*Creamos un contenedor para aplicar la idea de los fondos y tal*/
+.background-grid {
+    position: fixed; /*Fixed significa que el contenedor se mantendrá en su lugar al hacer scroll*/
+    top: 0; /*Posición superior del contenedor*/
+    left: 0; /*Posición izquierda del contenedor*/
+    width: 100%; 
+    height: 100%;
+    z-index: -1; /*Para que quede detrás de todo el contenido*/
+    display: grid; /*Con esto hago que se divida en tres columnas*/
+    grid-template-areas: /*Crea las áreas de la cuadrícula*/
+        "left center right"; /*Dividimos la parte inferior del banner en columa izquierda, centro y derecha*/
+    grid-template-rows: 100vh; /*La primera fila es de 200px y la segunda ocupa el resto del espacio disponible*/
+    grid-template-columns: 1fr 745px 1fr; /*Tres columnas, la del centro de 800px y las laterales ocupando el resto del espacio*/
+}
+
+
+/* Columna izquierda */
+.bg-left {
+    grid-area: left;
+    background: 
+    linear-gradient(to bottom, 
+        rgb(0, 0, 0) 0%,           /* Transparente arriba */
+        rgba(0, 0, 0, 0.088) 10%,
+        rgba(0, 0, 0, 0) 70%,        /* Ligeramente opaco */
+        rgba(0, 0, 0, 0) 100%        /* Más opaco abajo */
+    ),
+    linear-gradient(to left, 
+        rgba(0, 0, 0, 0.964) 0%,      /* Oscuro izquierda */
+        rgba(0, 0, 0, 0) 10%,     /* Medio */
+        rgba(0, 0, 0, 0) 100%       /* Transparente derecha */
+    ),
+    url('imagenes/descarga (6).jpeg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Área central (donde va el formulario) */
+.bg-center {
+    background-position: center;
+    grid-area: center;
+    background-color: #000000;
+    background-size: cover;
+}
+
+/* Columna derecha */
+.bg-right {
+    grid-area: right;
+    background: 
+    linear-gradient(to bottom, 
+        rgba(0, 0, 0, 0) 0%,           /* Transparente arriba */
+        rgba(0, 0, 0, 0.858) 10%,
+        rgba(0, 0, 0, 0) 70%,        /* Ligeramente opaco */
+        rgba(0, 0, 0, 0) 100%        /* Más opaco abajo */
+    ),
+    linear-gradient(to right, 
+        rgba(0, 0, 0, 0.964) 0%,      /* Oscuro izquierda */
+        rgba(0, 0, 0, 0) 1%,     /* Medio */
+        rgba(0, 0, 0, 0) 100%       /* Transparente derecha */
+    ),
+    url('imagenes/descarga (3).jpeg');
+        
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Overlay semi-transparente para mejorar legibilidad */
+.bg-left::after,
+.bg-right::after,
+.bg-banner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
 }
 
 header {
@@ -23,24 +127,47 @@ header {
     margin-bottom: 40px;
 }
 
+/*==================================================================================================================*/
+/*Estilos definidos para la primera ventana, la de carga de archivos*/
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
 header h1 {
-    font-size: 3rem;
+    font-size: 4rem;
+    letter-spacing: 6px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    font-family: 'Cinema Groovy', Arial, sans-serif;;
     margin-bottom: 10px;
 }
 
+header p{
+    font-size: 1rem;
+    color: #f0f0f0;
+    margin-bottom: 10px;
+    font-family: 'AnonymousRegular', Arial, sans-serif;
+}
+
+
 .upload-form {
-    background: white;
+    background: rgba(255, 255, 255, 0.916);
     border-radius: 15px;
     padding: 40px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .personas-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 30px;
+    display: grid; /*Con esto hago que se divida en dos columnas*/
+    grid-template-columns: 1fr 1fr; /*Dos columnas de igual tamaño*/
+    gap: 30px; /*Espacio entre las dos columnas*/
+    margin-bottom: 15px;
 }
 
 .persona {
@@ -50,8 +177,9 @@ header h1 {
 }
 
 .persona h2 {
-    color: #667eea;
+    color: #445464;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .file-group {
@@ -60,6 +188,7 @@ header h1 {
 
 .file-group label {
     display: block;
+    font-family: 'JetBrainsMono-Bold', Arial, sans-serif;
     margin-bottom: 5px;
     font-weight: bold;
 }
@@ -72,28 +201,111 @@ header h1 {
 }
 
 .analyze-btn {
+    grid-area: center; /*Colocamos el botón en el centro de la cuadrícula*/
+    display: grid; /*Con esto hago que se divida en tres columnas*/
+    grid-template-areas: /*Crea las áreas de la cuadrícula*/
+        "left center right"; /*Dividimos la parte inferior del banner en columa izquierda, centro y derecha*/
+    grid-template-rows: 2vh;
+    grid-template-columns: 1fr 1fr 1fr; /*Tres columnas, la del centro de 800px y las laterales ocupando el resto del espacio*/
     width: 100%;
+    
+    font-family: 'JetBrainsMono-Bold', Arial, sans-serif;
     padding: 15px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #445464;
     color: white;
     border: none;
     border-radius: 10px;
-    font-size: 1.2rem;
     cursor: pointer;
     transition: transform 0.2s;
 }
 
-.analyze-btn:hover {
+.analyze-btn-left{
+    grid-area: left;
+    background: url('imagenes/icono letterboxd.png');
+    background-position: left center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.analyze-btn-center{
+    grid-area: center;
+    font-size: 1rem;
+    text-align: center;
+}
+.analyze-btn-right {
+    grid-area: right;
+    background: url('imagenes/icono letterboxd.png');
+    background-position: right center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.analyze-btn:hover { /*hover efecto, el cursor cambia al pasar por encima del boton*/
     transform: translateY(-2px);
+}
+
+.info {
+    background: rgba(255,255,255,0.9);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px 0px;
+    text-align: center;
+}
+
+.info a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.info .aviso{
+    font-style: italic;
+    font-size: 1rem;
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 7px 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    color: #856404;
+}
+
+.upload-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/*==================================================================================================================*/
+/*Pestaña donde se muestran los resultados finales de la compatibilidad*/
+
+.container-results {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header .logo h1 {
+    font-size: 4rem;
+    letter-spacing: 6px;
+    color: #fff;
+    text-shadow: 5px 5px 4px rgba(0, 0, 0, 0.411);
+    font-weight: bold;
+    font-family: 'Cinema Groovy', Arial, sans-serif;
+    margin-top: 10px;
 }
 
 .compatibility-score {
     text-align: center;
     background: white;
     padding: 40px;
+    font-family: 'JetBrainsMono-Bold', Arial, sans-serif;
     border-radius: 15px;
     margin-bottom: 30px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.compatibility-score h2 {
+    color: #000000;
+    margin-bottom: 20px;
+    font-size: 2rem;
 }
 
 .score {
@@ -121,6 +333,7 @@ header h1 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
+    font-family: 'JetBrainsMono-Bold', Arial, sans-serif;
     margin-bottom: 30px;
 }
 
@@ -137,21 +350,10 @@ header h1 {
     margin-bottom: 10px;
 }
 
+
 .metric span {
     font-size: 2rem;
     font-weight: bold;
-}
-
-.info {
-    background: rgba(255,255,255,0.9);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.info a {
-    color: #667eea;
-    text-decoration: none;
 }
 
 .back-btn {
@@ -179,7 +381,6 @@ header h1 {
     }
 }
 
-/* ...existing code... */
 
 .score-fill {
     height: 100%;
@@ -259,6 +460,8 @@ header h1 {
 }
 
 .genres {
+ 
+    font-family: 'JetBrainsMono-Bold', Arial, sans-serif;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
@@ -305,3 +508,223 @@ header h1 {
         font-size: 1.5rem;
     }
 }
+
+/*Animacion para la barra de progreso de compatibilidad*/
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+/*==================================================================================================================*/
+/* PESTAÑA AUXILIAR QUE SALE MIENTRAS SE CALCULA TODO*/
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    font-family: 'JetBrainsMono-Bold', Arial, sans-serif;
+    backdrop-filter: blur(5px);
+}
+
+.loading-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: fadeInScale 0.3s ease;
+}
+
+.loading-content p{
+    padding-top: 20px;
+}
+
+
+/* Añadir a tu style.css */
+
+/* Contenedor del spinner con imágenes */
+.spinner-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px auto;
+}
+
+/* Spinner original */
+.spinner {
+    width: 80px;
+    height: 80px;
+    border: 6px solid rgba(102, 126, 234, 0.2);
+    border-top: 6px solid #667eea;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+/* Contenedor de las imágenes */
+.spinner-images {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    z-index: 1;
+}
+
+/* Estilo base de las imágenes del spinner */
+.spinner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Imágenes específicas */
+.spinner-image:nth-child(1) {
+    background-image: url('/static/imagenes/edward norton.png');
+}
+
+.spinner-image:nth-child(2) {
+    background-image: url('/static/imagenes/degradado efecto.png');
+}
+
+.spinner-image:nth-child(3) {
+    background-image: url('/static/imagenes/bradpi efecto.png');
+}
+
+.spinner-image.active {
+    opacity: 1;
+}
+
+/* Animación automática de fundido */
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    25% { opacity: 1; }
+    75% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Aplicar animación a cada imagen con delay */
+.spinner-image:nth-child(1) {
+    animation: fadeInOut 6s infinite;
+    animation-delay: 0s;
+}
+
+.spinner-image:nth-child(2) {
+    animation: fadeInOut 6s infinite;
+    animation-delay: 2s;
+}
+
+.spinner-image:nth-child(3) {
+    animation: fadeInOut 6s infinite;
+    animation-delay: 4s;
+}
+
+/* Versión con efecto cinematográfico */
+@keyframes cinematicFade {
+    0% { 
+        opacity: 0; 
+        transform: scale(1.2);
+        filter: blur(2px);
+    }
+    15% { 
+        opacity: 1; 
+        transform: scale(1);
+        filter: blur(0px);
+    }
+    85% { 
+        opacity: 1; 
+        transform: scale(1);
+        filter: blur(0px);
+    }
+    100% { 
+        opacity: 0; 
+        transform: scale(0.8);
+        filter: blur(2px);
+    }
+}
+
+/* Para usar el efecto cinematográfico, cambia fadeInOut por cinematicFade */
+.spinner-image.cinematic:nth-child(1) {
+    animation: cinematicFade 9s infinite;
+    animation-delay: 0s;
+}
+
+.spinner-image.cinematic:nth-child(2) {
+    animation: cinematicFade 9s infinite;
+    animation-delay: 3s;
+}
+
+.spinner-image.cinematic:nth-child(3) {
+    animation: cinematicFade 9s infinite;
+    animation-delay: 6s;
+}
+
+/* Animación del spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-content h3 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.loading-content p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Pasos de la carga, pasando por carga de archivo, calculo, etc*/
+.loading-steps {
+    text-align: left;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.step {
+    padding: 8px 0;
+    color: #999;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.step.active {
+    color: #667eea;
+    font-weight: bold;
+}
+
+.step.completed {
+    color: #28a745;
+}
+
+
