@@ -598,63 +598,70 @@ header .logo h1 {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Imágenes específicas */
-.spinner-image:nth-child(1) { /*nth-child, indica primer hijo de la clase spinner-image*/
-    background-image: url('/static/imagenes/edward norton.png');
-}
 
-.spinner-image:nth-child(2) {
-    background-image: url('/static/imagenes/degradado efecto.png');
-}
-
-.spinner-image:nth-child(3) {
-    background-image: url('/static/imagenes/bradpi efecto.png');
-}
-
-.spinner-image.active { /*.active significa que la imagen está visible */
-    opacity: 1;
-}
 
 
 /* Versión con efecto cinematográfico */
 /*Esto lo que hace es que añade un efecto de desenfoque y escalado a las imágenes del spinner*/
 @keyframes cinematicFade {
-    0% { /*En el 0% lo que hace es que la imagen esté desenfocada y escalada*/
+    /* Fase 1: Imagen invisible */
+    0% { 
         opacity: 0; 
-        transform: scale(1.2);
-        filter: blur(2px);
+        transform: scale(1.1);
+        filter: blur(1px);
     }
-    15% { /*En el 15% lo que hace es que la imagen esté en su estado original*/
+    
+    /* Fase 2: Imagen aparece gradualmente */
+    10% { 
         opacity: 1; 
         transform: scale(1);
         filter: blur(0px);
     }
-    85% { /*En el 85% lo que hace es que la imagen esté en su estado original*/
+    
+    
+    45% { 
         opacity: 1; 
         transform: scale(1);
-        filter: blur(0px);
     }
-    100% { /*En el 100% lo que hace es que la imagen esté desenfocada y escalada*/
+    
+    65% { 
         opacity: 0; 
-        transform: scale(0.8);
-        filter: blur(2px);
+        transform: scale(0.95);
+    }
+    
+    80% { 
+        opacity: 0; 
+        transform: scale(0.95);
+    }
+    
+    100% { 
+        opacity: 0; 
+        transform: scale(0.95);
     }
 }
 
 /*De esta forma conseguimos el efecto fundido que hace cada imagen con la siguiente*/
-.spinner-image.cinematic:nth-child(1) {
+/* Imágenes específicas */
+.spinner-image:nth-child(1) { /*nth-child, indica primer hijo de la clase spinner-image*/
+    background-image: url('/static/imagenes/edward norton.png');
     animation: cinematicFade 9s infinite;
     animation-delay: 0s;
 }
 
-.spinner-image.cinematic:nth-child(2) {
+.spinner-image:nth-child(2) {
+    background-image: url('/static/imagenes/degradado efecto.png');
     animation: cinematicFade 9s infinite;
-    animation-delay: 3s;
+    animation-delay: 2.5s;
 }
 
-.spinner-image.cinematic:nth-child(3) {
+.spinner-image:nth-child(3) {
+    background-image: url('/static/imagenes/bradpi efecto.png');
     animation: cinematicFade 9s infinite;
-    animation-delay: 6s;
+    animation-delay: 5s;
+}
+
+.spinner-image.active { /*.active significa que la imagen está visible */
+    opacity: 1;
 }
 
 /* Animación del spinner */
